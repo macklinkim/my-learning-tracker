@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+.next/
+dist/
+.wrangler/
+
+# Environment (절대 커밋 금지)
+.env
+.env.local
+.env*.local
+.dev.vars
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# bun.lock은 재현 가능한 빌드를 위해 git 추적 대상 (gitignore 제외)

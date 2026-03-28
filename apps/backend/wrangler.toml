@@ -1,0 +1,12 @@
+name = "learning-tracker-backend"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# 민감하지 않은 공개 설정값만 여기에 기입
+# 배포 시 실제 값으로 교체
+SUPABASE_URL = "https://crouyvsnxlyysvoxzkhc.supabase.co"
+
+# 민감한 Secret은 아래 명령으로 Cloudflare에 암호화 저장:
+# wrangler secret put SUPABASE_SERVICE_ROLE_KEY

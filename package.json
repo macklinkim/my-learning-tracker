@@ -1,0 +1,16 @@
+{
+  "name": "my-learning-tracker",
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:frontend": "bun run --cwd apps/frontend dev",
+    "dev:backend": "bun run --cwd apps/backend dev",
+    "build:frontend": "bun run --cwd apps/frontend build",
+    "test": "bun run --cwd packages/shared-types test",
+    "typecheck": "bun run --cwd packages/shared-types typecheck"
+  }
+}

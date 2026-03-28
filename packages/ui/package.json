@@ -1,0 +1,6 @@
+{
+  "name": "@learning-tracker/ui",
+  "version": "0.0.1",
+  "private": true,
+  "description": "공통 UI 컴포넌트 (Phase 3 이후 구현 예정)"
+}
