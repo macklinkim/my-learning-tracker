@@ -24,7 +24,7 @@ export default async function DashboardPage() {
         </form>
       </div>
       <p className="mt-6 text-gray-600">
-        안녕하세요, <span className="font-medium">{user?.email}</span>님!
+        안녕하세요, <span className="font-medium">{user!.email}</span>님!
       </p>
       <p className="mt-2 text-sm text-gray-400">
         Phase 3에서 학습 대시보드가 여기에 구현됩니다.
