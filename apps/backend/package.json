@@ -1,5 +1,11 @@
 {
   "name": "@learning-tracker/backend",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    }
+  },
   "version": "0.0.1",
   "private": true,
   "scripts": {
