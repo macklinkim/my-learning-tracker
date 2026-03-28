@@ -29,6 +29,6 @@ export async function signup(formData: FormData) {
 
 export async function signout() {
   const supabase = await createClient()
-  await supabase.auth.signOut()
+  await supabase.auth.signOut({ scope: 'local' })
   redirect('/login')
 }
