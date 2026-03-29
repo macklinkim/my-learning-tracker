@@ -1,7 +1,7 @@
-import { login } from './actions'
+import { signup } from '../login/actions'
 import Link from 'next/link'
 
-export default async function LoginPage({
+export default async function SignupPage({
   searchParams,
 }: {
   searchParams: Promise<{ error?: string; message?: string }>
@@ -12,8 +12,11 @@ export default async function LoginPage({
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <div className="w-full max-w-sm space-y-6 rounded-lg border border-border bg-card text-card-foreground p-6 shadow-sm">
         <h1 className="text-center text-2xl font-bold tracking-tight">
-          Learning Tracker
+          회원가입
         </h1>
+        <p className="text-center text-sm text-muted-foreground">
+          새로운 계정을 생성하여 시작하세요
+        </p>
 
         {params.error && (
           <p className="rounded-md bg-destructive/15 px-3 py-2 text-sm text-destructive">
@@ -51,21 +54,21 @@ export default async function LoginPage({
               required
               minLength={6}
               className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30"
-              placeholder="••••••••"
+              placeholder="최소 6자 이상"
             />
           </div>
-          <div className="flex gap-2 pt-2">
+          <div className="flex flex-col gap-2 pt-2">
             <button
-              formAction={login}
-              className="inline-flex h-9 flex-1 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+              formAction={signup}
+              className="inline-flex h-9 w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
             >
-              로그인
+              가입하기
             </button>
             <Link
-              href="/signup"
-              className="inline-flex h-9 flex-1 items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+              href="/login"
+              className="inline-flex h-9 w-full items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
             >
-              회원가입
+              로그인으로 돌아가기
             </Link>
           </div>
         </form>
