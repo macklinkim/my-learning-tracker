@@ -8,26 +8,26 @@ export default async function LoginPage({
   const params = await searchParams
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50">
-      <div className="w-full max-w-sm space-y-6 rounded-lg border bg-white p-6 shadow-sm">
+    <div className="flex min-h-screen items-center justify-center bg-background p-4">
+      <div className="w-full max-w-sm space-y-6 rounded-lg border bg-card text-card-foreground p-6 shadow-sm">
         <h1 className="text-center text-2xl font-bold tracking-tight">
           Learning Tracker
         </h1>
 
         {params.error && (
-          <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-600">
+          <p className="rounded-md bg-destructive/15 px-3 py-2 text-sm text-destructive">
             {params.error}
           </p>
         )}
         {params.message && (
-          <p className="rounded-md bg-green-50 px-3 py-2 text-sm text-green-600">
+          <p className="rounded-md bg-green-500/15 px-3 py-2 text-sm text-green-600 dark:text-green-400">
             {params.message}
           </p>
         )}
 
         <form className="space-y-4">
           <div>
-            <label htmlFor="email" className="mb-1 block text-sm font-medium">
+            <label htmlFor="email" className="mb-1 block text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               이메일
             </label>
             <input
@@ -35,12 +35,12 @@ export default async function LoginPage({
               name="email"
               type="email"
               required
-              className="w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
               placeholder="you@example.com"
             />
           </div>
           <div>
-            <label htmlFor="password" className="mb-1 block text-sm font-medium">
+            <label htmlFor="password" className="mb-1 block text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               비밀번호
             </label>
             <input
@@ -49,20 +49,20 @@ export default async function LoginPage({
               type="password"
               required
               minLength={6}
-              className="w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
               placeholder="••••••••"
             />
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 pt-2">
             <button
               formAction={login}
-              className="flex-1 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+              className="inline-flex h-9 flex-1 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
             >
               로그인
             </button>
             <button
               formAction={signup}
-              className="flex-1 rounded-md border px-4 py-2 text-sm font-medium hover:bg-gray-50"
+              className="inline-flex h-9 flex-1 items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
             >
               회원가입
             </button>
