@@ -1,34 +1,66 @@
-import { createClient } from '@/lib/supabase/server'
-import { signout } from '@/app/(auth)/login/actions'
+'use client'
 
-export default async function DashboardPage() {
-  // layout.tsx에서 이미 getUser() 호출 후 리다이렉트 처리.
-  // page에서 재호출하는 것은 중복이지만 user 데이터를 직접 사용하기 위해 허용.
-  // Phase 3에서 데이터 fetching이 추가되면 통합 검토.
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { StudyHeatmap } from '@/components/charts/study-heatmap'
+import { TopicPieChart } from '@/components/charts/topic-pie'
+import { useTopics } from '@/lib/api/hooks/use-topics'
+import { useLearningItems } from '@/lib/api/hooks/use-learning-items'
+import { useProgressLogs } from '@/lib/api/hooks/use-progress-logs'
+
+export default function DashboardPage() {
+  const { data: topics = [] } = useTopics()
+  const { data: learningItems = [] } = useLearningItems()
+  const { data: progressLogs = [] } = useProgressLogs()
+
+  const completedCount  = learningItems.filter((i: any) => i.status === 'completed').length
+  const inProgressCount = learningItems.filter((i: any) => i.status === 'in_progress').length
+  const totalMinutes    = progressLogs.reduce((sum: number, log: any) => sum + log.duration_minutes, 0)
 
   return (
-    <main className="p-8">
-      <div className="flex items-center justify-between border-b pb-4">
-        <h1 className="text-2xl font-bold">Learning Tracker</h1>
-        <form action={signout}>
-          <button
-            type="submit"
-            className="rounded-md border px-4 py-2 text-sm hover:bg-gray-50"
-          >
-            로그아웃
-          </button>
-        </form>
+    <div className="space-y-6">
+      <h2 className="text-xl font-semibold">대시보드</h2>
+
+      {/* 요약 카드 3개 */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <Card>
+          <CardHeader><CardTitle>전체 학습 항목</CardTitle></CardHeader>
+          <CardContent>
+            <p className="text-3xl font-bold">{learningItems.length}</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader><CardTitle>완료</CardTitle></CardHeader>
+          <CardContent>
+            <p className="text-3xl font-bold text-green-600 dark:text-green-400">
+              {completedCount}
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader><CardTitle>총 학습 시간</CardTitle></CardHeader>
+          <CardContent>
+            <p className="text-3xl font-bold">
+              {Math.floor(totalMinutes / 60)}h {totalMinutes % 60}m
+            </p>
+          </CardContent>
+        </Card>
       </div>
-      <p className="mt-6 text-gray-600">
-        안녕하세요, <span className="font-medium">{user!.email}</span>님!
-      </p>
-      <p className="mt-2 text-sm text-gray-400">
-        Phase 3에서 학습 대시보드가 여기에 구현됩니다.
-      </p>
-    </main>
+
+      {/* 학습 히트맵 */}
+      <Card>
+        <CardHeader><CardTitle>학습 히트맵 (최근 1년)</CardTitle></CardHeader>
+        <CardContent className="overflow-x-auto">
+          <StudyHeatmap logs={progressLogs} />
+        </CardContent>
+      </Card>
+
+      {/* 토픽별 파이 차트 */}
+      <Card>
+        <CardHeader><CardTitle>토픽별 학습 비중</CardTitle></CardHeader>
+        <CardContent>
+          <TopicPieChart topics={topics} learningItems={learningItems} />
+        </CardContent>
+      </Card>
+    </div>
   )
 }
