@@ -21,8 +21,13 @@ export type Bindings = {
 
 const app = new Hono<{ Bindings: Bindings }>()
 
-// CORS (로컬 개발용)
-app.use('*', cors({ origin: ['http://localhost:3000'] }))
+// CORS
+app.use('*', cors({
+  origin: [
+    'http://localhost:3000',
+    'https://my-learning-tracker-frontend.vercel.app',
+  ],
+}))
 
 // 공개 엔드포인트
 app.get('/', (c) => c.json({ message: 'Learning Tracker API', status: 'ok' }))
