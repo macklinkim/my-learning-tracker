@@ -16,9 +16,12 @@ function getIntensityClass(minutes: number): string {
 export function StudyHeatmap({ logs }: { logs: ProgressLog[] }) {
   const dateMap = useMemo(() => groupLogsByDate(logs), [logs])
 
-  const today = new Date()
-  const start = subDays(today, 364)
-  const days = eachDayOfInterval({ start, end: today })
+  const { today, start, days } = useMemo(() => {
+    const today = new Date()
+    const start = subDays(today, 364)
+    const days = eachDayOfInterval({ start, end: today })
+    return { today, start, days }
+  }, [])
 
   // 첫 날의 요일만큼 빈 셀 앞에 추가 (일요일=0)
   const firstDayOfWeek = getDay(start)

@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import {
   PieChart,
   Pie,
@@ -19,12 +20,16 @@ interface Props {
 }
 
 export function TopicPieChart({ topics, learningItems }: Props) {
-  const data = topics
-    .map((topic) => ({
-      name: topic.name,
-      value: learningItems.filter((item) => item.topic_id === topic.id).length,
-    }))
-    .filter((d) => d.value > 0)
+  const data = useMemo(
+    () =>
+      topics
+        .map((topic) => ({
+          name: topic.name,
+          value: learningItems.filter((item) => item.topic_id === topic.id).length,
+        }))
+        .filter((d) => d.value > 0),
+    [topics, learningItems],
+  )
 
   if (data.length === 0) {
     return (
@@ -46,7 +51,7 @@ export function TopicPieChart({ topics, learningItems }: Props) {
           label={({ name, percent }: PieLabelRenderProps) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
         >
           {data.map((_, index) => (
-            <Cell key={index} fill={COLORS[index % COLORS.length]} />
+            <Cell key={data[index].name} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
         <Tooltip />

@@ -1,20 +1,29 @@
 'use client'
 
+import { useMemo } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { StudyHeatmap } from '@/components/charts/study-heatmap'
 import { TopicPieChart } from '@/components/charts/topic-pie'
 import { useTopics } from '@/lib/api/hooks/use-topics'
 import { useLearningItems } from '@/lib/api/hooks/use-learning-items'
 import { useProgressLogs } from '@/lib/api/hooks/use-progress-logs'
+import type { LearningItem, ProgressLog } from '@learning-tracker/shared-types'
 
 export default function DashboardPage() {
   const { data: topics = [] } = useTopics()
-  const { data: learningItems = [] } = useLearningItems()
-  const { data: progressLogs = [] } = useProgressLogs()
+  const { data: rawLearningItems = [] } = useLearningItems()
+  const { data: rawProgressLogs = [] } = useProgressLogs()
+  const learningItems = rawLearningItems as LearningItem[]
+  const progressLogs = rawProgressLogs as ProgressLog[]
 
-  const completedCount  = learningItems.filter((i: any) => i.status === 'completed').length
-  const inProgressCount = learningItems.filter((i: any) => i.status === 'in_progress').length
-  const totalMinutes    = progressLogs.reduce((sum: number, log: any) => sum + log.duration_minutes, 0)
+  const completedCount = useMemo(
+    () => learningItems.filter((i) => i.status === 'completed').length,
+    [learningItems],
+  )
+  const totalMinutes = useMemo(
+    () => progressLogs.reduce((sum, log) => sum + log.duration_minutes, 0),
+    [progressLogs],
+  )
 
   return (
     <div className="space-y-6">
