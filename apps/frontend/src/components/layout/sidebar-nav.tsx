@@ -2,13 +2,14 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, List, Kanban } from 'lucide-react'
+import { LayoutDashboard, List, Kanban, Settings } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navItems = [
   { href: '/',       icon: LayoutDashboard, label: '대시보드' },
   { href: '/items',  icon: List,            label: '학습 목록' },
-  { href: '/kanban', icon: Kanban,          label: '칸반 보드' },
+  { href: '/kanban',   icon: Kanban,          label: '칸반 보드' },
+  { href: '/settings', icon: Settings,        label: '설정' },
 ]
 
 export function SidebarNav() {
