@@ -1,5 +1,6 @@
 import { SidebarNav } from '@/components/layout/sidebar-nav'
 import { Header } from '@/components/layout/header'
+import { ModalManager } from '@/components/modals/modal-manager'
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   return (
@@ -16,6 +17,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         <Header />
         <main className="flex-1 overflow-y-auto p-6">{children}</main>
       </div>
+      <ModalManager />
     </div>
   )
 }
