@@ -1,12 +1,11 @@
 import { z } from 'zod'
-import { ContentTypeSchema, ItemStatusSchema } from '@learning-tracker/shared-types'
 
 export const LearningItemFormSchema = z.object({
   title: z.string().min(1, '제목을 입력하세요'),
   url: z.string().url('올바른 URL을 입력하세요').or(z.literal('')).optional(),
-  content_type: ContentTypeSchema,
+  content_type: z.string().min(1, '콘텐츠 유형을 선택하세요'),
   topic_id: z.string().nullable().optional(),
-  status: ItemStatusSchema,
+  status: z.string().min(1, '상태를 선택하세요'),
   estimated_minutes: z.number().int().positive().nullable().optional(),
   due_date: z.string().nullable().optional(),
 })

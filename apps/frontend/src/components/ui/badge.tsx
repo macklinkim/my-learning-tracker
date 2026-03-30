@@ -1,21 +1,14 @@
 import { cn } from '@/lib/utils'
-import type { ItemStatus, ContentType } from '@learning-tracker/shared-types'
+import { useCodeMap } from '@/lib/api/hooks/use-codes'
 
-const statusStyles: Record<ItemStatus, string> = {
+const statusStyles: Record<string, string> = {
   inbox:       'bg-gray-100   text-gray-700   dark:bg-gray-800     dark:text-gray-300',
   todo:        'bg-blue-100   text-blue-700   dark:bg-blue-900/40  dark:text-blue-300',
   in_progress: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300',
   completed:   'bg-green-100  text-green-700  dark:bg-green-900/40 dark:text-green-300',
 }
 
-const statusLabels: Record<ItemStatus, string> = {
-  inbox: '수신함',
-  todo: '할 일',
-  in_progress: '진행 중',
-  completed: '완료',
-}
-
-const contentTypeStyles: Record<ContentType, string> = {
+const contentTypeStyles: Record<string, string> = {
   url:     'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300',
   article: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300',
   video:   'bg-red-100    text-red-700    dark:bg-red-900/40    dark:text-red-300',
@@ -24,28 +17,34 @@ const contentTypeStyles: Record<ContentType, string> = {
   problem: 'bg-pink-100   text-pink-700   dark:bg-pink-900/40   dark:text-pink-300',
 }
 
-export function StatusBadge({ status }: { status: ItemStatus }) {
+const fallbackStyle = 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300'
+
+export function StatusBadge({ status }: { status: string }) {
+  const labelMap = useCodeMap('item_status')
+
   return (
     <span
       className={cn(
         'inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium',
-        statusStyles[status]
+        statusStyles[status] ?? fallbackStyle,
       )}
     >
-      {statusLabels[status]}
+      {labelMap.get(status) ?? status}
     </span>
   )
 }
 
-export function ContentTypeBadge({ type }: { type: ContentType }) {
+export function ContentTypeBadge({ type }: { type: string }) {
+  const labelMap = useCodeMap('content_type')
+
   return (
     <span
       className={cn(
         'inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium',
-        contentTypeStyles[type]
+        contentTypeStyles[type] ?? fallbackStyle,
       )}
     >
-      {type}
+      {labelMap.get(type) ?? type}
     </span>
   )
 }

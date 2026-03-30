@@ -21,15 +21,9 @@ import { cn } from '@/lib/utils'
 import { KanbanCard, KanbanCardContent } from './kanban-card'
 import { useLearningItems, useUpdateLearningItem } from '@/lib/api/hooks/use-learning-items'
 import { useTopics } from '@/lib/api/hooks/use-topics'
+import { useCodes } from '@/lib/api/hooks/use-codes'
 import { useFilterStore } from '@/stores/use-filter-store'
 import type { ItemStatus, LearningItem, Topic } from '@learning-tracker/shared-types'
-
-const COLUMNS: { id: ItemStatus; label: string }[] = [
-  { id: 'inbox',       label: '수신함'  },
-  { id: 'todo',        label: '할 일'   },
-  { id: 'in_progress', label: '진행 중' },
-  { id: 'completed',   label: '완료'    },
-]
 
 function DroppableColumn({
   id,
@@ -101,10 +95,16 @@ function filterItems(
 export function KanbanBoard() {
   const { data: rawItems = [], isLoading } = useLearningItems()
   const { data: rawTopics = [] } = useTopics()
+  const { data: statusCodes = [] } = useCodes('item_status')
   const { mutate: updateItem } = useUpdateLearningItem()
   const queryClient = useQueryClient()
   const { topicFilter, searchQuery } = useFilterStore()
   const [activeItem, setActiveItem] = useState<LearningItem | null>(null)
+
+  const COLUMNS = useMemo(
+    () => statusCodes.map((c) => ({ id: c.code as ItemStatus, label: c.label })),
+    [statusCodes],
+  )
 
   const allItems = rawItems as LearningItem[]
   const topics = rawTopics as Topic[]
