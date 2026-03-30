@@ -21,3 +21,4 @@ Thumbs.db
 .idea/
 
 # bun.lock은 재현 가능한 빌드를 위해 git 추적 대상 (gitignore 제외)
+apps/frontend/.claude/settings.local.json
