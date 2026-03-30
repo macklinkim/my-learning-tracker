@@ -2,9 +2,8 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { getAuthHeaders } from '@/lib/api/get-auth-headers'
+import { API_URL } from '@/lib/api/client'
 import type { Code } from '@learning-tracker/shared-types'
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8787'
 
 export function useCodes(group?: string) {
   return useQuery({
