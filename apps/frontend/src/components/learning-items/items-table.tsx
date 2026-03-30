@@ -13,6 +13,7 @@ import { useState, useMemo } from 'react'
 import { formatDate } from '@/lib/format'
 import { StatusBadge, ContentTypeBadge } from '@/components/ui/badge'
 import { InlineCell } from './inline-cell'
+import { InlineStatusCell } from './inline-status-cell'
 import { useLearningItems, useUpdateLearningItem } from '@/lib/api/hooks/use-learning-items'
 import { useFilterStore } from '@/stores/use-filter-store'
 import type { LearningItem } from '@learning-tracker/shared-types'
@@ -60,7 +61,14 @@ export function ItemsTable() {
       }),
       col.accessor('status', {
         header: '상태',
-        cell: (info) => <StatusBadge status={info.getValue()} />,
+        cell: (info) => (
+          <InlineStatusCell
+            value={info.getValue()}
+            onSave={(status) =>
+              updateItem({ id: info.row.original.id, body: { status } })
+            }
+          />
+        ),
       }),
       col.accessor('content_type', {
         header: '유형',
