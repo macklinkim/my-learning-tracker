@@ -16,7 +16,7 @@ export type LearningItemFormValues = z.infer<typeof LearningItemFormSchema>
 export const TopicFormSchema = z.object({
   name: z.string().min(1, '이름을 입력하세요'),
   color: z.string().min(1),
-  parent_id: z.string().uuid().nullable().optional(),
+  parent_id: z.union([z.literal(''), z.string().uuid()]).nullable().optional(),
 })
 
 export type TopicFormValues = z.infer<typeof TopicFormSchema>
