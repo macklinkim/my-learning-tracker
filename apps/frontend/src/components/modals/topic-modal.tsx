@@ -29,6 +29,8 @@ export function TopicModal() {
     register,
     handleSubmit,
     reset,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<TopicFormValues>({
     resolver: zodResolver(TopicFormSchema),
@@ -68,6 +70,15 @@ export function TopicModal() {
     }
   }
 
+  const currentColor = watch('color')
+
+  const PASTEL_COLORS = [
+    '#f87171', '#fb923c', '#fbbf24', '#facc15',
+    '#a3e635', '#4ade80', '#34d399', '#2dd4bf',
+    '#22d3ee', '#38bdf8', '#60a5fa', '#818cf8',
+    '#a78bfa', '#c084fc', '#e879f9', '#f472b6',
+  ]
+
   const parentOptions = [
     { value: '', label: '상위 토픽 없음' },
     ...(topics as { id: string; name: string }[])
@@ -91,8 +102,22 @@ export function TopicModal() {
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="color">색상</Label>
-          <div className="flex items-center gap-2">
+          <Label>색상</Label>
+          <div className="grid grid-cols-8 gap-1.5">
+            {PASTEL_COLORS.map((c) => (
+              <button
+                key={c}
+                type="button"
+                className="size-7 rounded-md border-2 transition-transform hover:scale-110"
+                style={{
+                  backgroundColor: c,
+                  borderColor: currentColor === c ? '#1e293b' : 'transparent',
+                }}
+                onClick={() => setValue('color', c)}
+              />
+            ))}
+          </div>
+          <div className="flex items-center gap-2 pt-1">
             <Input
               id="color"
               type="color"
