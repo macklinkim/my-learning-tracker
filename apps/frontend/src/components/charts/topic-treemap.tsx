@@ -82,7 +82,7 @@ export function TopicTreemap({ topics, learningItems, progressLogs }: Props) {
         aspectRatio={4 / 3}
         content={<CustomContent x={0} y={0} width={0} height={0} name="" color="" minutes={0} />}
       >
-        <Tooltip formatter={(value: number) => [`${value}분`, '학습 시간']} />
+        <Tooltip formatter={(value) => [`${value}분`, '학습 시간']} />
       </Treemap>
     </ResponsiveContainer>
   )

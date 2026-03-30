@@ -59,7 +59,7 @@ export function TopicBarChart({ topics, learningItems, progressLogs }: Props) {
       <BarChart data={data} layout="vertical" margin={{ left: 0, right: 20 }}>
         <XAxis type="number" tick={{ fontSize: 11 }} unit="분" />
         <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} width={80} />
-        <Tooltip formatter={(value: number) => [`${value}분`, '학습 시간']} />
+        <Tooltip formatter={(value) => [`${value}분`, '학습 시간']} />
         <Bar dataKey="minutes" radius={[0, 4, 4, 0]}>
           {data.map((d, i) => (
             <Cell key={d.name} fill={d.color || COLORS[i % COLORS.length]} />
