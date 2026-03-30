@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs",
+      "Bash(npx tsc:*)",
+      "Bash(./node_modules/.bin/tsc --noEmit --pretty 2>&1 | head -30)",
+      "Bash(which bun:*)",
+      "Bash(ls:*)",
+      "Bash(node:*)"
+    ]
+  }
+}
