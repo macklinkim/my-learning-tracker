@@ -96,15 +96,15 @@ export function KanbanBoard() {
   const { data: rawItems = [], isLoading } = useLearningItems()
   const { data: rawTopics = [] } = useTopics()
   const { data: statusCodes = [] } = useCodes('item_status')
+  const { mutate: updateItem } = useUpdateLearningItem()
+  const queryClient = useQueryClient()
+  const { topicFilter, searchQuery } = useFilterStore()
+  const [activeItem, setActiveItem] = useState<LearningItem | null>(null)
 
   const COLUMNS = useMemo(
     () => statusCodes.map((c) => ({ id: c.code as ItemStatus, label: c.label })),
     [statusCodes],
   )
-  const { mutate: updateItem } = useUpdateLearningItem()
-  const queryClient = useQueryClient()
-  const { topicFilter, searchQuery } = useFilterStore()
-  const [activeItem, setActiveItem] = useState<LearningItem | null>(null)
 
   const allItems = rawItems as LearningItem[]
   const topics = rawTopics as Topic[]
