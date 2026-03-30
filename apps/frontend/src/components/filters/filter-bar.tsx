@@ -6,14 +6,8 @@ import { Select } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { useFilterStore } from '@/stores/use-filter-store'
 import { useTopics } from '@/lib/api/hooks/use-topics'
+import { useCodes } from '@/lib/api/hooks/use-codes'
 import type { ItemStatus } from '@learning-tracker/shared-types'
-
-const STATUS_LABELS: Record<ItemStatus, string> = {
-  inbox: '수신함',
-  todo: '할 일',
-  in_progress: '진행 중',
-  completed: '완료',
-}
 
 export function FilterBar() {
   const {
@@ -26,6 +20,7 @@ export function FilterBar() {
     resetFilters,
   } = useFilterStore()
   const { data: topics = [] } = useTopics()
+  const { data: statusCodes = [] } = useCodes('item_status')
 
   const [localSearch, setLocalSearch] = useState(searchQuery)
 
@@ -64,18 +59,16 @@ export function FilterBar() {
       />
 
       <div className="flex gap-1">
-        {(Object.entries(STATUS_LABELS) as [ItemStatus, string][]).map(
-          ([status, label]) => (
-            <Button
-              key={status}
-              variant={statusFilter.includes(status) ? 'default' : 'outline'}
-              size="xs"
-              onClick={() => toggleStatus(status)}
-            >
-              {label}
-            </Button>
-          )
-        )}
+        {statusCodes.map((sc) => (
+          <Button
+            key={sc.code}
+            variant={statusFilter.includes(sc.code as ItemStatus) ? 'default' : 'outline'}
+            size="xs"
+            onClick={() => toggleStatus(sc.code as ItemStatus)}
+          >
+            {sc.label}
+          </Button>
+        ))}
       </div>
 
       <Select

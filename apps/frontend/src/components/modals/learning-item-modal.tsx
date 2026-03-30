@@ -14,29 +14,17 @@ import {
   useCreateLearningItem,
   useUpdateLearningItem,
 } from '@/lib/api/hooks/use-learning-items'
+import { useCodeOptions } from '@/lib/api/hooks/use-codes'
 import { LearningItemFormSchema, type LearningItemFormValues } from '@/lib/schemas'
-
-const CONTENT_TYPE_OPTIONS = [
-  { value: 'url', label: 'URL' },
-  { value: 'article', label: '아티클' },
-  { value: 'video', label: '비디오' },
-  { value: 'book', label: '도서' },
-  { value: 'note', label: '노트' },
-  { value: 'problem', label: '문제' },
-]
-
-const STATUS_OPTIONS = [
-  { value: 'inbox', label: '수신함' },
-  { value: 'todo', label: '할 일' },
-  { value: 'in_progress', label: '진행 중' },
-  { value: 'completed', label: '완료' },
-]
 
 export function LearningItemModal() {
   const { modalMode, modalData, closeModal } = useUIStore()
   const { data: topics = [] } = useTopics()
   const { mutate: createItem, isPending: isCreating } = useCreateLearningItem()
   const { mutate: updateItem, isPending: isUpdating } = useUpdateLearningItem()
+
+  const contentTypeOptions = useCodeOptions('content_type')
+  const statusOptions = useCodeOptions('item_status')
 
   const isEdit = modalMode === 'edit'
   const isPending = isCreating || isUpdating
@@ -132,7 +120,7 @@ export function LearningItemModal() {
             <Label htmlFor="content_type">콘텐츠 유형 *</Label>
             <Select
               id="content_type"
-              options={CONTENT_TYPE_OPTIONS}
+              options={contentTypeOptions}
               {...register('content_type')}
             />
           </div>
@@ -141,7 +129,7 @@ export function LearningItemModal() {
             <Label htmlFor="status">상태 *</Label>
             <Select
               id="status"
-              options={STATUS_OPTIONS}
+              options={statusOptions}
               {...register('status')}
             />
           </div>

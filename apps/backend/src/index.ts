@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { authMiddleware } from './middleware/auth'
+import codes from './routes/codes'
 import topics from './routes/topics'
 import learningItems from './routes/learning-items'
 import progressLogs from './routes/progress-logs'
@@ -42,6 +43,7 @@ app.route('/webhook/telegram', telegramWebhook)
 app.use('/api/*', authMiddleware)
 
 const routes = app
+  .route('/api/codes', codes)
   .route('/api/topics', topics)
   .route('/api/learning-items', learningItems)
   .route('/api/progress-logs', progressLogs)

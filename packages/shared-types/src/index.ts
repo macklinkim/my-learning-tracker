@@ -1,12 +1,26 @@
 import { z } from 'zod'
 
-// ─── Enums ────────────────────────────────────────────────────────────────────
+// ─── Code (공통 코드 테이블) ──────────────────────────────────────────────────
 
-export const ContentTypeSchema = z.enum(['url', 'article', 'video', 'book', 'note', 'problem'])
-export const ItemStatusSchema = z.enum(['inbox', 'todo', 'in_progress', 'completed'])
+export const CodeSchema = z.object({
+  id: z.string().uuid(),
+  group_code: z.string(),
+  code: z.string(),
+  label: z.string(),
+  order_index: z.number().int().default(0),
+  is_active: z.boolean().default(true),
+  created_at: z.string(),
+})
 
-export type ContentType = z.infer<typeof ContentTypeSchema>
-export type ItemStatus = z.infer<typeof ItemStatusSchema>
+export type Code = z.infer<typeof CodeSchema>
+
+// ─── Enums (DB codes 테이블에서 관리, 타입은 string으로 유연하게) ────────────
+
+export const ContentTypeSchema = z.string()
+export const ItemStatusSchema = z.string()
+
+export type ContentType = string
+export type ItemStatus = string
 
 // ─── Profile ──────────────────────────────────────────────────────────────────
 
